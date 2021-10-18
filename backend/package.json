@@ -2,11 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "Back de Piiquante",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "set NODE_ENV=development && nodemon -r dotenv/config server.js",
-    "dev": "set NODE_ENV=development && nodemon -r dotenv/config server.js"
+    "start": "nodemon -r dotenv/config server.js",
+    "dev": "nodemon -r dotenv/config server.js"
   },
   "author": "Jean-Baptiste ALIGNAN",
   "license": "ISC",

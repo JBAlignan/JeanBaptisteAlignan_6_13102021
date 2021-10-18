@@ -9,24 +9,18 @@ const config =  require('./config.js');
 //Importation des routes.
 const userRoutes = require('./routes/user');
 const saucesRoutes = require('./routes/sauces');
+const likeRoute = require('./routes/like');
 //Importation de mongoose.
 const mongoose = require('mongoose');
 
 
 //Connexion à la BDD.
-// mongoose.connect'mongodb+srv://Jean-Baptiste:inthedeathcar@cluster0.gbs7x.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
 mongoose.connect(`mongodb+srv://${config.DB_USERNAME}:${config.DB_PASSWORD}@cluster0.gbs7x.mongodb.net/${config.DATA_BASE_NAME}?retryWrites=true&w=majority`,
-
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => {
     console.log('Connexion à MongoDB échouée !');
-    console.log(`${config.DB_USERNAME}`)
-    console.log(`${config.DB_PASSWORD}`)
-    console.log(`${config.DATA_BASE_NAME}`)
-    console.log(`${config.NODE_ENV}`)
-    
   });
 
 // Gestion du CORS
@@ -45,6 +39,7 @@ app.use('/api/auth', userRoutes);
 app.use('/api/sauces', saucesRoutes);
 app.delete('/api/sauces/:id', saucesRoutes);
 app.put('/api/sauces/:id', saucesRoutes);
+app.use('/api/sauces', likeRoute);
 
 
 
