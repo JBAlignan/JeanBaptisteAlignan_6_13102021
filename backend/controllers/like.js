@@ -40,21 +40,28 @@ exports.likeHandler = (req, res, next) => {
                     throw new Error ("Vous avez déjà disliké cette sauce.")
                 }
             }
+
+            // function checkArrayUsers (arrayUsers, userId){
+            //     return arrayUsers.find(id => id === userId);
+            // };
+        
+            // function newUserArray (arrayUsers, userId){
+            //     return arrayUsers.filter(id => id !== userId)
+            // };
+
             //Si annulation d'un like ou dislike.
             else if (like === 0){
-            let likeUser = checkArrayUsers(sauce.usersLiked, userId);
+            let removeLikeUser = checkArrayUsers(sauce.usersLiked, userId);
+            let removeDislikeUser = checkArrayUsers(sauce.usersDisliked, userId);
                 //Si l'utilisateur annule sont like.
-                if(likeUser) {
+                if(removeLikeUser) {
                     sauce.likes -= 1;
                     sauce.usersLiked = newUserArray(sauce.usersLiked, userId);
                 }
-                else {
-                    //Si l'utilisateur annule son dislike.
-            let dislikeUser = checkArrayUsers(sauce.usersDisliked, userId);
-                    if(dislikeUser){
-                    sauce.dislikes += 1;
+                //Si l'utilisateur annule son dislike.
+                else if(removeDislikeUser) {
+                    sauce.dislikes -= 1;
                     sauce.usersLiked = newUserArray(sauce.usersDisliked, userId);
-                }
                 }
             }
             sauce.save()
