@@ -1,10 +1,12 @@
 //Importation du schema mongoose du fichier sauces.js dans le dossier models.
 const Sauce = require('../models/sauces');
 
+//Cherche si le userId est présent dans le tableau passé en paramètre.
    function checkArrayUsers (arrayUsers, userId){
         return arrayUsers.find(id => id === userId);
     };
 
+    //Retourne un nouveau tableau sans l'userId passé en paramètre.
     function newUserArray (arrayUsers, userId){
         return arrayUsers.filter(id => id !== userId)
     };
@@ -41,27 +43,24 @@ exports.likeHandler = (req, res, next) => {
                 }
             }
 
-            // function checkArrayUsers (arrayUsers, userId){
-            //     return arrayUsers.find(id => id === userId);
-            // };
-        
-            // function newUserArray (arrayUsers, userId){
-            //     return arrayUsers.filter(id => id !== userId)
-            // };
-
             //Si annulation d'un like ou dislike.
             else if (like === 0){
             let removeLikeUser = checkArrayUsers(sauce.usersLiked, userId);
             let removeDislikeUser = checkArrayUsers(sauce.usersDisliked, userId);
                 //Si l'utilisateur annule sont like.
                 if(removeLikeUser) {
+                    console.log("Message de test")
                     sauce.likes -= 1;
                     sauce.usersLiked = newUserArray(sauce.usersLiked, userId);
                 }
                 //Si l'utilisateur annule son dislike.
                 else if(removeDislikeUser) {
+                    console.log("Message de test numéro 2")
                     sauce.dislikes -= 1;
-                    sauce.usersLiked = newUserArray(sauce.usersDisliked, userId);
+                    sauce.usersDisliked = newUserArray(sauce.usersDisliked, userId);
+                }
+                else if(!removeLikeUser && !removeDislikeUser){
+                    throw new Error ("Vous n'avez pas liké ou disliké la sauce")
                 }
             }
             sauce.save()

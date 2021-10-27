@@ -1,6 +1,6 @@
-//Importation du package HTTP de Node.
+//Importation du package HTTP de Node; permet la création du serveur.
 const http = require('http');
-//Imprtation du contenu de app.js.
+//Importation du contenu de app.js.
 const app = require('./app');
 
 const normalizePort = val => {
@@ -14,9 +14,11 @@ const normalizePort = val => {
   }
   return false;
 };
+//Définit et indique le port à utiliser.
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+//Gestion des erreurs.
 const errorHandler = error => {
   if (error.syscall !== 'listen') {
     throw error;
@@ -37,9 +39,11 @@ const errorHandler = error => {
   }
 };
 
+//Création du serveur.
 const server = http.createServer(app);
 
 server.on('error', errorHandler);
+//Lance le serveur.
 server.on('listening', () => {
   const address = server.address();
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
